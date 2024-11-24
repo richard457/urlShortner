@@ -1,21 +1,27 @@
-package com.shortner.core;
+package com.shortner.core.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.Data;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.time.Instant;
 
 @Entity
-public class URLs {
+@Table(name = "urls")
+@Data
+public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String originalUrl;
-    private String shortCode;
-    private long createdAt;
 
-    // Getters and Setters
+    @Column(nullable = false)
+    private String originalUrl;
+
+    @Column(nullable = false, unique = true)
+    private String shortCode;
+
+    @Column(nullable = false)
+    private Instant createdAt;
+
     public Long getId() {
         return id;
     }
@@ -40,18 +46,11 @@ public class URLs {
         this.shortCode = shortCode;
     }
 
-    public long getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
-
-    // Save the entity using repository
-    public void persist() {
-        // Use Spring Data JPA repository to save this object
-        // You can inject the repository and call save() here if necessary
-    }
 }
-

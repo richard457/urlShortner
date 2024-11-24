@@ -28,6 +28,14 @@ dependencies {
 	implementation 'org.slf4j:slf4j-api:2.0.0'
 
 	implementation 'org.hibernate.orm:hibernate-community-dialects:6.6.3.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// Api docs
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.8'
+	compileOnly 'org.projectlombok:lombok:1.18.36'
+	annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+
+
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
