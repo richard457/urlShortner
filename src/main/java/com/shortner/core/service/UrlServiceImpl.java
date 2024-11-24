@@ -114,7 +114,7 @@ public class UrlServiceImpl implements UrlService {
     }
 
     private UrlResponse buildUrlResponse(Url url) {
-        String shortUrl = appConfig.getBaseUrl() + url.getShortCode();
+        String shortUrl = appConfig.getBaseUrl() +"/"+ url.getShortCode();
         return new UrlResponse(url.getOriginalUrl(), shortUrl);
     }
 }
