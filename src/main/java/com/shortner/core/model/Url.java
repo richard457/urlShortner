@@ -24,13 +24,13 @@ public class Url {
 
 
     @Column(nullable = true)
-    private Instant ttl;
+    private long ttl;
 
-    public Instant getTtl() {
-        return ttl;
+    public long getTtl() {
+        return this.ttl;
     }
 
-    public void setTtl(Instant ttl) {
+    public void setTtl(long ttl) {
         this.ttl = ttl;
     }
 

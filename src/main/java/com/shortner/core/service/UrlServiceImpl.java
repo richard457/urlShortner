@@ -110,7 +110,7 @@ public class UrlServiceImpl implements UrlService {
                     url.setShortCode(urlShortenerUtil.generateUniqueShortCode());
                 }
                 if(request.getTtl() !=null){
-                    url.setTtl(request.getTtl());
+                    url.setTtl(request.getTtl().toEpochMilli());
                 }
                 url.setCreatedAt(Instant.now());
 

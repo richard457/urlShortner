@@ -14,6 +14,8 @@ import java.util.Optional;
 @Repository
 public interface UrlRepository extends JpaRepository<Url, Long> {
 
+    List<Url> findByTtlBefore(long now);
+
     /**
      * Find a URL by its short code
      * @param shortCode the short code to look up
