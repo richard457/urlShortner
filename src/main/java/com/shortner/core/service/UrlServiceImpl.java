@@ -8,6 +8,7 @@ import com.shortner.core.model.dto.UrlResponse;
 import com.shortner.core.repository.UrlRepository;
 import com.shortner.core.util.UrlShortenerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
@@ -46,12 +47,18 @@ public class UrlServiceImpl implements UrlService {
 
         // Check if URL already exists
         Url existingUrl = urlRepository.findByOriginalUrl(originalUrl).orElse(null);
+        Url existWithShortCode = urlRepository.findByShortCode(request.getShortCode()).orElse(null);
 
+
+        if (existWithShortCode != null) {
+            String errorMessage = "The short code already exists: " + request.getShortCode();
+            return ResponseEntity.unprocessableEntity().body(new UrlResponse(errorMessage, null)).getBody();
+        }
         if (existingUrl != null) {
             return buildUrlResponse(existingUrl);
         }
         // Create new URL with retry mechanism
-        return createNewShortUrl(originalUrl);
+        return createNewShortUrl(originalUrl,request);
     }
 
     @Override
@@ -91,13 +98,20 @@ public class UrlServiceImpl implements UrlService {
         }
     }
 
-    private UrlResponse createNewShortUrl(String originalUrl) {
+    private UrlResponse createNewShortUrl(String originalUrl, UrlRequest request) {
         int attempts = 0;
         while (true) {
             try {
                 Url url = new Url();
                 url.setOriginalUrl(originalUrl);
-                url.setShortCode(urlShortenerUtil.generateUniqueShortCode());
+                if(!request.getShortCode().isEmpty()){
+                    url.setShortCode(request.getShortCode());
+                }else{
+                    url.setShortCode(urlShortenerUtil.generateUniqueShortCode());
+                }
+                if(request.getTtl() !=null){
+                    url.setTtl(request.getTtl());
+                }
                 url.setCreatedAt(Instant.now());
 
                 Url savedUrl = urlRepository.save(url);

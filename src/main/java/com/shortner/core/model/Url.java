@@ -22,6 +22,18 @@ public class Url {
     @Column(nullable = false)
     private Instant createdAt;
 
+
+    @Column(nullable = true)
+    private Instant ttl;
+
+    public Instant getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(Instant ttl) {
+        this.ttl = ttl;
+    }
+
     public Long getId() {
         return id;
     }

@@ -28,6 +28,7 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
      */
     Optional<Url> findByOriginalUrl(String originalUrl);
 
+
     /**
      * Check if a short code already exists
      * @param shortCode the short code to check
